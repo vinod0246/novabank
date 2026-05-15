@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
@@ -46,15 +48,23 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/deposit")
+    public ResponseEntity<Account> depositMoney(
+            @RequestBody Map<String, Object> request) {
+        String accountNumber = (String) request.get("accountNumber");
+        Double amount = Double.valueOf(
+            request.get("amount").toString());
+        return ResponseEntity.ok(
+            accountService.depositMoney(accountNumber, amount));
+    }
+
     @PutMapping("/balance/{accountNumber}")
     public ResponseEntity<Account> updateBalanceByAccountNumber(
             @PathVariable String accountNumber,
             @RequestParam Double amount) {
-                Account account =accountService.getAccountByNumber(accountNumber);
-                return ResponseEntity.ok(
-                    accountService.updateBalance(account.getId(), amount))
-        ;
+        Account account = accountService
+            .getAccountByNumber(accountNumber);
+        return ResponseEntity.ok(
+            accountService.updateBalance(account.getId(), amount));
     }
-    
-
 }
