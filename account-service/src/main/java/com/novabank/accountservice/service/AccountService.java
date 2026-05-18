@@ -43,6 +43,12 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    public Account depositMoney(String accountNumber, Double amount) {
+        Account account = getAccountByNumber(accountNumber);
+        account.setBalance(account.getBalance() + amount);
+        return accountRepository.save(account);
+    }
+
     public void deleteAccount(Long id) {
         if (!accountRepository.existsById(id)) {
             throw new RuntimeException("Account not found: " + id);
