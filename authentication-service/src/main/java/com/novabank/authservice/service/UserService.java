@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.HashMap;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class UserService {
@@ -84,4 +85,19 @@ public class UserService {
         response.put("token", token);
         return response;
     }
+
+    @PostConstruct
+  public void createDefaultUser() {
+    if (!userRepository.existsByUsername("vinod")) {
+        User user = new User();
+        user.setUsername("vinod");
+        user.setEmail("vinod@novabank.com");
+        user.setPassword(
+            passwordEncoder.encode("vinod123"));
+        user.setRole("ADMIN");
+        userRepository.save(user);
+        System.out.println(
+            "✅ Default user created: vinod/vinod123");
+    }
+}
 }
