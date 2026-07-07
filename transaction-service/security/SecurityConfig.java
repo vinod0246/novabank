@@ -1,4 +1,4 @@
-package com.novabank.accountservice.security;
+package com.novabank.transactionservice.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,7 +54,7 @@ public class SecurityConfig {
                     SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/accounts/health",
+                    "/api/transactions/health",
                     "/actuator/**",
                     "/h2-console/**")
                     .permitAll()
