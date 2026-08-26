@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mvn spring-boot:run)"
+      "Bash(mvn spring-boot:run)",
+      "Bash(powershell -Command \"Stop-Process -Id 6432,33488 -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 2; Get-Process -Id 6432,33488 -ErrorAction SilentlyContinue\")"
     ]
   }
 }
